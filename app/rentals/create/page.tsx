@@ -1,7 +1,11 @@
+import AmenitiesInput from '@/components/form/AmenitiesInput'
 import { SubmitButton } from '@/components/form/Buttons'
 import CategoriesInput from '@/components/form/CategoriesInput'
+import CounterInput from '@/components/form/CounterInput'
+import CountriesInput from '@/components/form/CountriesInput'
 import FormContainer from '@/components/form/FormContainer'
 import FormInput from '@/components/form/FormInput'
+import ImageInput from '@/components/form/ImageInput'
 import PriceInput from '@/components/form/PriceInput'
 import TextAreaInput from '@/components/form/TextAreaInput'
 import { createPropertyAction } from '@/utils/actions'
@@ -25,6 +29,19 @@ function CreateProperty() {
                     <CategoriesInput/>
                 </div>
                 <TextAreaInput name='description' labelText='Description (10- 1000 words)' />
+                <div className="grid sm:grid-cols-2 gap-8 mt-4">
+                    <CountriesInput />
+                    <ImageInput />
+                </div>
+                <h3 className='text-lg mt-8 mb-4 font-medium'>
+                    Accommodation Details
+                </h3>
+                <CounterInput detail='guests' />
+                <CounterInput detail='bedrooms' />
+                <CounterInput detail='beds' />
+                <CounterInput detail='baths' />
+                <h3 className='text-lg mt-10 mb-6 font-medium'>Amenities</h3>
+                <AmenitiesInput/>
                 <SubmitButton text='create rental' className='mt-12' />
             </FormContainer>
         </div>
