@@ -2,6 +2,9 @@ import { formatCurrency } from "@/utils/format";
 import { PropertyCardProps } from "@/utils/types"
 import Image from "next/image";
 import Link from "next/link";
+import PropertyRating from "./PropertyRating";
+import FavoriteToogleButton from "./FavoriteToogleButton";
+import CountryFlagAndName from "./CountryFlagAndName";
 
 function PropertyCard({property}:{property: PropertyCardProps}) {
   const {name, image, price} = property;
@@ -13,11 +16,11 @@ function PropertyCard({property}:{property: PropertyCardProps}) {
         <div className="relative h-[300px] mb-2 overflow-hidden rounded-md">
           <Image src={image} fill sizes="{max-width:768px} 100vw, 50vw" alt={name} className="rounded-md object-cover transform group-hover:scale-110 transition-transform duration-500"/>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold mt-1">
             {name.substring(0,30)}
           </h3>
-          {/* property rating */}
+          <PropertyRating inPage={false} propertyId={propertyId} />
         </div>
         <p className="text-sm mt-1 text-muted-foreground">
           {tagline.substring(0,40)}
@@ -28,10 +31,12 @@ function PropertyCard({property}:{property: PropertyCardProps}) {
               {formatCurrency(price)} </span>
             night
           </p>
-          {/* country and flag */}
+          <CountryFlagAndName countryCode={country} />
         </div>
       </Link>
-      <div className="absolute top-5 right-5 z-5"></div>
+      <div className="absolute top-5 right-5 z-5">
+        <FavoriteToogleButton propertyId={propertyId} />
+      </div>
     </article>
   )
 }

@@ -4,6 +4,7 @@ import EmptyList from "./EmptyList";
 import PropertiesList from "./PropertiesList";
 
 async function PropertiesContainer({category, search}:{category?:string, search?:string}) {
+    // await new Promise(resolve => setTimeout(resolve, 3 * 1000));
     const properties: PropertyCardProps[] = await fetchProperties({
         category, search
     });
