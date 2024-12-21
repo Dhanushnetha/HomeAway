@@ -183,3 +183,17 @@ export const fetchProperties = async({search='', category}:{search?: string, cat
     });
     return properties;
 }
+
+export const fetchFavoriteId = async({propertyId}:{propertyId: string})=>{
+    const user = await getAuthuser();
+    const favorite = await db.favorite.findFirst({
+        where:{
+            propertyId,
+            profileId: user.id,
+        },
+        select:{
+            id: true,
+        },
+    });
+    return favorite?.id || null;
+}
