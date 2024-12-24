@@ -11,7 +11,7 @@ import { LuShare2 } from "react-icons/lu";
 
 function ShareButton({propertyId, name}:{propertyId:string, name:string}) {
     const url = process.env.NEXT_PUBLIC_WEBSITE_URL;
-    const shareLink = `${url}/prperties/${propertyId}`;
+    const shareLink = `${url}/properties/${propertyId}`;
   return (
     <section>
         <Popover>
