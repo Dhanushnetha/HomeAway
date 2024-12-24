@@ -58,7 +58,7 @@ async function PropertyDetailsPage({params}:{params:{id:string}}) {
             </div>
         </section>
         <SubmitReview propertyId={property.id} />
-        <PropertyReviews ke propertyId={property.id} />
+        <PropertyReviews propertyId={property.id} />
     </section>
   )
 }
