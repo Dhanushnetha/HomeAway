@@ -24,11 +24,12 @@ const ReviewsPage = async () => {
                 const deleteAction = deleteReviewAction.bind(null, {
                   reviewId: review.id
                 })
-                return <FormContainer action={deleteAction}>
+                return (
                   <ReviewCard key={review.id} reviewInfo={reviewInfo}>
-                    <IconButton actionType='delete' />
-                  </ReviewCard>
-                </FormContainer>
+                    <FormContainer action={deleteAction}>
+                        <IconButton actionType='delete' />
+                    </FormContainer>
+                  </ReviewCard>)
             })}
         </section>
     </>
