@@ -25,11 +25,12 @@ const ReviewsPage = async () => {
                   reviewId: review.id
                 })
                 return (
-                  <ReviewCard key={review.id} reviewInfo={reviewInfo}>
-                    <FormContainer action={deleteAction}>
-                        <IconButton actionType='delete' />
-                    </FormContainer>
-                  </ReviewCard>)
+                      <ReviewCard key={review.id} reviewInfo={reviewInfo}>
+                        <FormContainer action={deleteAction}>
+                            <IconButton actionType='delete' />
+                        </FormContainer>
+                      </ReviewCard>
+                  );
             })}
         </section>
     </>

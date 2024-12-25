@@ -61,3 +61,17 @@ export const IconButton = ({actionType}:{actionType:actionType})=>{
         {pending ? <ReloadIcon className="animate-spin"/> : renderIcon() }
     </Button>
 }
+
+export const BookingSignInButton = ()=>{
+    return <SignInButton mode="modal">
+        <Button type='button' className=" w-full" >
+            Sign in to Continue Booking
+        </Button>
+    </SignInButton>
+}
+
+export const CheckOutButton = ()=>{
+    return <Button type='button' size='default' variant={'outline'} className="p-2 cursor-pointer" asChild >
+            Proceed to checkout
+        </Button>
+}

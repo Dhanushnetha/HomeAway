@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import { useToast } from '../ui/use-toast'
 import {actionFunction} from '@/utils/types'
