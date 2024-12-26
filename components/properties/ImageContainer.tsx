@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import React from 'react'
 
 function ImageContainer({mainImage, name}: {mainImage:string, name:string}) {
   return (

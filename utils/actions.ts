@@ -444,3 +444,70 @@ export const deleteBookingAction = async(prevState:{bookingId: string})=>{
         return renderError(error);
     }
 }
+
+export const deleteRentalAction = async (prevState:{propertyId: string})=>{
+    const {propertyId} = prevState;
+    const user = await getAuthuser();
+    try {
+        await db.property.delete({
+            where:{
+                id: propertyId,
+                profileId: user.id,
+            }
+        });
+        revalidatePath('/rentals');
+        return {message: 'Rental deleted successfully'};
+    } catch (error) {
+        return renderError(error);
+    }
+}
+
+export const fetchRentals = async()=>{
+    const user = await getAuthuser();
+    const rentals = await db.property.findMany({
+        where:{
+            profileId: user.id,
+        },
+        select:{
+            id: true,
+            name: true,
+            price: true,
+            bookings:{
+                select:{
+                    orderTotal: true,
+                    totalNights: true,
+                }
+            }
+        }
+    });
+    const rentalsWithTotals = rentals.map((rental) => ({
+        ...rental,
+        orderTotalSum: rental.bookings.reduce((sum, booking) => sum + booking.orderTotal, 0),
+        totalNightsSum: rental.bookings.reduce((sum, booking)=> sum + booking.totalNights, 0),
+    }));
+    return rentalsWithTotals;
+    // console.log(rentalsWithTotals, 'loggg');
+
+}
+
+export const fetchRentalDetails = async(propertyId: string)=>{
+    const user = await getAuthuser();
+    const rentalDetails = await db.property.findUnique({
+        where:{
+            id: propertyId,
+            profileId: user.id,
+        }
+    })
+    return rentalDetails;
+}
+
+export const updatePropertyAction = async (prevState:any, formData:FormData)=>{
+
+    return {message: 'Property updated'};
+}
+
+export const updatePropertyImageAction = async (prevState:any, formData:FormData)=>{
+    console.log(formData.get('id'));
+    
+    return {message: 'Property Image updated'};
+}
