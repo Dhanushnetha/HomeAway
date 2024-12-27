@@ -17,6 +17,12 @@ const getAuthuser = async()=>{
     return user;
 }
 
+const getAdminUser = async()=>{
+    const user = await getAuthuser();
+    if(user.id !== process.env.ADMIN_USERID) redirect('/');
+    return user;
+}
+
 const renderError = (error:unknown):{message: string}=>{
     return {message: error instanceof Error ? error.message : 'An error occured'}
 }
@@ -501,13 +507,84 @@ export const fetchRentalDetails = async(propertyId: string)=>{
     return rentalDetails;
 }
 
-export const updatePropertyAction = async (prevState:any, formData:FormData)=>{
-
-    return {message: 'Property updated'};
+export const updatePropertyAction = async (prevState:any, formData:FormData): Promise<{message: string}>=>{
+    const user = await getAuthuser();
+    const propertyId = formData.get('id') as string;
+    try {
+        const rawData = Object.fromEntries(formData);
+        const validatedData = validateWithZodSchema(propertySchema, rawData);
+        await db.property.update({
+            where:{
+                id: propertyId,
+                profileId: user.id,
+            },
+            data: {
+                ...validatedData,
+            }
+        });
+        revalidatePath(`/rentals/${propertyId}/edit`);
+        return {message: 'Property updated successfully'};
+    } catch (error) {
+        return renderError(error);
+    }
 }
 
-export const updatePropertyImageAction = async (prevState:any, formData:FormData)=>{
-    console.log(formData.get('id'));
-    
-    return {message: 'Property Image updated'};
+export const updatePropertyImageAction = async (prevState:any, formData:FormData): Promise<{message: string}>=>{
+    const user = await getAuthuser();
+    const propertyId = formData.get('id') as string;
+
+    try {
+        const file = formData.get('image') as File;
+
+        const validateFile = validateWithZodSchema(imageSchema, {image: file});
+        const fullPath = await uploadImage(validateFile.image);
+        await db.property.update({
+            where:{
+                profileId: user.id,
+                id: propertyId,
+            },
+            data:{
+                image: fullPath,
+            }
+        });
+        revalidatePath(`rentals/${propertyId}/edit`);
+        return {message: 'Property Image updated successfully'};
+    } catch (error) {
+        return renderError(error);
+    };
+}
+
+export const fetchReservations = async()=>{
+    const user = await getAuthuser();
+
+    const reservations = await db.booking.findMany({
+        where:{
+            property:{
+                profileId: user.id,
+            }
+        },
+        orderBy:{
+            createdAt: 'desc'
+        },
+        include:{
+            property:{
+                select:{
+                    id: true,
+                    name: true,
+                    price: true,
+                    country: true,
+                }
+            }
+        }
+    });
+    return reservations;
+}
+
+export const fetchStats = async()=>{
+    await getAdminUser();
+    const usersCount = await db.profile.count();
+    const propertiesCount = await db.property.count();
+    const bookingsCount = await db.booking.count();
+
+    return {usersCount, propertiesCount, bookingsCount};
 }
