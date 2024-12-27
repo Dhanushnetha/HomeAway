@@ -9,7 +9,6 @@ import ImageInput from '@/components/form/ImageInput'
 import PriceInput from '@/components/form/PriceInput'
 import TextAreaInput from '@/components/form/TextAreaInput'
 import { createPropertyAction } from '@/utils/actions'
-import React from 'react'
 
 function CreateProperty() {
   return (
