@@ -1,7 +1,11 @@
+import { fetchChartsData } from "@/utils/actions"
+import Chart from "./Chart";
 
-function ChartsContainer() {
+async function ChartsContainer() {
+    const bookings = await fetchChartsData();
+if(bookings.length == 0) return null;
   return (
-    <div>ChartsContainer</div>
+    <Chart data={bookings} />
   )
 }
 
