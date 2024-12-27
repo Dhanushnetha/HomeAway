@@ -653,6 +653,7 @@ export const fetchReservationStats = async()=>{
       totalNights: true,
     },
     where:{
+      paymentStatus: true,
       property:{
         profileId: user.id,
       }
