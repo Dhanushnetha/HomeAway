@@ -1,5 +1,6 @@
 import CountryFlagAndName from "@/components/card/CountryFlagAndName";
 import EmptyList from "@/components/home/EmptyList";
+import Stats from "@/components/reservations/Stats";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { fetchReservations } from "@/utils/actions";
 import { formatCurrency, formatDate } from "@/utils/format";
@@ -10,6 +11,8 @@ async function ReservationsPage() {
     if(reservations.length == 0) return <EmptyList/>
   
     return (
+      <>
+      <Stats />
       <div className="mt-16">
         <h4 className="mb-4 capitalize">total reservations : {reservations.length}</h4>
         <Table>
@@ -49,6 +52,7 @@ async function ReservationsPage() {
           </TableBody>
         </Table>
       </div>
+      </>
     )
 }
 
