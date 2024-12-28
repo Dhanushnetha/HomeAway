@@ -39,7 +39,7 @@ export const POST = async(req: NextRequest, res: NextResponse)=>{
             line_items:[
                     {quantity:1,
                         price_data:{
-                        currency:'usd', product_data:{
+                        currency:'INR', product_data:{
                             name:`${name}`, images: [image], description:`Stay in this wonderful place from ${formatDate(checkIn)} to ${formatDate(checkOut)}. Enjoy your stay!`,
                         },
                         unit_amount: orderTotal* 100,
