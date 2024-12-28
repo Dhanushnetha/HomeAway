@@ -1,8 +1,8 @@
 export const formatCurrency = (amount: number | null) => {
     const value = amount || 0;
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
@@ -21,5 +21,5 @@ export const formatDate = (date: Date, onlyMonth?:boolean)=>{
     options.day = 'numeric'
   }
 
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+  return new Intl.DateTimeFormat('en-IN', options).format(date);
 }
